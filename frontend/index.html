@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  
+  <main class="container">
+    <div class="sidebar">
+      <header class="sidebar-header">
+        <h1>Assistant</h1>
+        <p class="subtitle">AI Help</p>
+      </header>
+
+      <nav class="options">
+        <button class="option-btn" data-action="chat">
+          <span class="icon">💬</span>
+          <div class="option-content">
+            <span class="option-title">Chat</span>
+            <span class="option-desc">Ask anything</span>
+          </div>
+        </button>
+
+        <button class="option-btn active" data-action="write">
+          <span class="icon">✍️</span>
+          <div class="option-content">
+            <span class="option-title">Write</span>
+            <span class="option-desc">Generate text</span>
+          </div>
+        </button>
+
+        <button class="option-btn" data-action="analyze">
+          <span class="icon">🔍</span>
+          <div class="option-content">
+            <span class="option-title">Analyze</span>
+            <span class="option-desc">Understand content</span>
+          </div>
+        </button>
+      </nav>
+
+      <div class="history-section">
+        <div class="history-header">
+          <span class="history-title">📋 History</span>
+          <button class="history-toggle" id="history-toggle" title="Toggle history">▼</button>
+        </div>
+        <div class="history-list" id="history-list">
+          <div class="history-empty">No history yet</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-panel">
+      <header class="panel-header">
+        <div class="header-content">
+          <h2 id="panel-title">Write & Create</h2>
+          <p id="panel-desc" class="panel-desc">Generate high-quality text and content</p>
+        </div>
+        <div class="header-actions">
+          <button class="header-icon" id="new-chat-btn" title="New Chat">➕</button>
+          <button class="header-icon" id="clear-btn" title="Clear">🗑️</button>
+        </div>
+      </header>
+
+      <div class="messages-area" id="messages">
+        <div class="welcome-message">
+          <h3>Welcome</h3>
+          <p>Start a new conversation or select a preset prompt below.</p>
+        </div>
+      </div>
+
+      <div class="presets" id="presets">
+        <!-- Preset buttons will be populated by JS -->
+      </div>
+
+      <footer class="input-footer">
+        <form class="input-form" id="chat-form">
+          <input 
+            id="message-input" 
+            type="text" 
+            placeholder="Type your message..." 
+            autocomplete="off"
+            aria-label="Message input"
+          />
+          <button type="submit" id="send-btn" class="send-btn">Send</button>
+        </form>
+      </footer>
+    </div>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

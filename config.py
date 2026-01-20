@@ -1,3 +1,3 @@
-GEMINI_API_KEY = "AIzaSyAFhgVw-8XRoZT12Jkr9AT7k4hbfhtFkk0"
+GEMINI_API_KEY = "AIzaSyBQDXPTukdFtVKrz6czAmogM8i3mQHvkto"
 GEMINI_MODEL = "models/gemini-flash-latest"
 MEMORY_FILE = "data/memory.json"
