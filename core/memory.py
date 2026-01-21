@@ -2,6 +2,9 @@ import json
 import os
 
 def load_memory(path):
+    # Create directory if it doesn't exist
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    
     if not os.path.exists(path):
         return []
     with open(path, "r") as f:
