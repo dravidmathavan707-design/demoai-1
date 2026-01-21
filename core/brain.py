@@ -1,9 +1,7 @@
 from google import genai
 from google.genai import types
-from config import GEMINI_API_KEY, GEMINI_MODEL
+from config import GEMINI_API_KEYS, GEMINI_MODEL
 import httpx
-
-client = genai.Client(api_key=GEMINI_API_KEY)
 
 def think(conversation):
     prompt = ""
@@ -17,13 +15,25 @@ def think(conversation):
         elif role == "assistant":
             prompt += f"AI: {content}\n"
 
-    try:
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt
-        )
-        return response.text.strip()
-    except httpx.ConnectError:
-        return "Error: Unable to connect to the API. Please check your internet connection."
-    except Exception as e:
-        return f"Error: {str(e)}"
+    # Try each API key until one works
+    for i, api_key in enumerate(GEMINI_API_KEYS, 1):
+        try:
+            client = genai.Client(api_key=api_key)
+            response = client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=prompt
+            )
+            return response.text.strip()
+        except httpx.ConnectError:
+            return "Error: Unable to connect to the API. Please check your internet connection."
+        except Exception as e:
+            error_str = str(e)
+            # If it's a permission/quota error, try next key
+            if "403" in error_str or "PERMISSION_DENIED" in error_str or "quota" in error_str.lower():
+                if i < len(GEMINI_API_KEYS):
+                    print(f"API Key {i} failed, trying Key {i+1}...")
+                    continue
+                else:
+                    return f"Error: All API keys have been exhausted. {error_str}"
+            else:
+                return f"Error: {error_str}"
