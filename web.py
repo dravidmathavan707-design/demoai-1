@@ -37,14 +37,18 @@ def chat(req: ChatRequest):
     if not is_safe(message):
         return {"reply": "That request is blocked for safety."}
 
-    with memory_lock:
-        global memory
-        memory = add_to_memory(memory, "user", message)
-        reply = think(memory)
-        memory = add_to_memory(memory, "assistant", reply)
-        save_memory(MEMORY_FILE, memory)
+    try:
+        with memory_lock:
+            global memory
+            memory = add_to_memory(memory, "user", message)
+            reply = think(memory)
+            memory = add_to_memory(memory, "assistant", reply)
+            save_memory(MEMORY_FILE, memory)
 
-    return {"reply": reply, "memory_length": len(memory)}
+        return {"reply": reply, "memory_length": len(memory)}
+    except Exception as e:
+        error_msg = str(e)
+        return {"reply": f"Error: {error_msg}", "error": True}
 
 
 @app.get("/health")
